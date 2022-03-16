@@ -147,10 +147,13 @@ Route::get("/couponStatu/{id}",[couponController::class,"couponStatu"]);
 Route::get('/allOrder',[orderController::class,"index"]);
 Route::post('/orderStatu',[orderController::class,"statuStore"]);
 Route::get('/orderDetails/{id}',[orderController::class,"orderDetails"]);
+Route::get('/allOrderCencel',[orderController::class,"orderCencel"]);
+Route::get('/cencelOrder',[orderController::class,"cencelOrder"]);
+Route::post('/orderCencelStatu',[orderController::class,"orderCencelStatu"]);
 
 /////////////////////////////////////////////////////////////////////////////////////
 //frontend route
-
+// user and user order route
 Route::post("/userRegister",[userController::class,"store"]);
 Route::post("/userLogin",[userController::class,"loginUser"]);
 Route::get("/getUser",[userController::class,"user"]);
@@ -161,18 +164,24 @@ Route::post("/userImageUpload",[userController::class,"image"]);
 Route::post("/updateProfile",[userController::class,"update"]);
 Route::post("/updatePassword",[userController::class,"updatePassword"]);
 
-
 Route::get("/web/userOrder",[userController::class,"userOrder"]);
 Route::get("/web/userOrderDetails/{id}",[userController::class,"orderDetails"]);
+Route::post("/web/orderCencel/{id}",[userController::class,"orderCencel"]);
+Route::get("/web/userOrderCencel",[userController::class,"userOrderCencelIndex"]);
+Route::get("/web/reorder/{id}",[userController::class,"reorder"]);
 
+Route::post("web/orderComplet/",[orderController::class,'store']);
 
 Route::get('/web/allProduct/',[webProductController::class,'index']);
 Route::get('/web/singleProduct/',[webProductController::class,'singleIndex']);
 Route::get('/web/quickView/{id}',[webProductController::class,'singleProduct']);
 Route::get('/web/colroWiseSize/{color_id}/{product_id}',[webProductController::class,'colorWiseSize']);
 Route::get('/web/sizeWisePrice/{attribute_id}/{size_id}/{product_id}',[webProductController::class,'sizeWisePrice']);
-
+//category
 Route::get('/web/category/',[webCategoryController::class,'index']);
+Route::get('/web/categoryProduct/{id}',[webCategoryController::class,'categoryProduct']);
+
+// shop page
 Route::get('/web/allColor/',[webShopController::class,'color']);
 Route::get('/web/allSize/',[webShopController::class,'size']);
 Route::get('/web/allBrand/',[webShopController::class,'brand']);
@@ -197,7 +206,6 @@ Route::get("web/cartQuantyInc/{id}",[cartController::class,'increment']);
 Route::get("web/couponApply/{data}",[cartController::class,'couponApply']);
 
 
-Route::post("web/orderComplet/",[orderController::class,'store']);
 
 
 

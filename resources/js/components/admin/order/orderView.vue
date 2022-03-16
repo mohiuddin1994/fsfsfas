@@ -121,6 +121,8 @@ export default {
     },
     mounted(){
 
+        
+
        axios.get("/orderDetails/"+this.$route.params.id).then((res)=>{
            this.orders = res.data.order
        })

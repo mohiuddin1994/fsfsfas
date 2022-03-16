@@ -14,6 +14,7 @@ export const storeData = {
         product: [],
         coupon: [],
         order: {},
+        orderCencel: {},
 
     },
 
@@ -52,6 +53,9 @@ export const storeData = {
         },
         order(state) {
             return state.order
+        },
+        orderCencel(state) {
+            return state.orderCencel
         },
     },
 
@@ -153,10 +157,22 @@ export const storeData = {
             axios.get("/couponList").then((res) => {
                 context.commit("coupon",res.data.coupon)
             })
-        },
+        },order(context) {
+            axios.get("/allOrder").then((res) => {
+                context.commit("order",res.data.order)
+            })
+
+         },
         order(context) {
             axios.get("/allOrder").then((res) => {
                 context.commit("order",res.data.order)
+            })
+
+        },
+        orderCencel(context) {
+            axios.get("/allOrderCencel").then((res) => {
+                console.log(res.data.orderCencel);
+                context.commit("orderCencel",res.data.orderCencel)
             })
 
          }
@@ -201,6 +217,10 @@ export const storeData = {
         },
         order(state, data) {
             return state.order = data
+        },
+
+        orderCencel(state, data) {
+            return state.orderCencel = data
         }
 
 

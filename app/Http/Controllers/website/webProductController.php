@@ -19,27 +19,32 @@ class webProductController extends Controller
         ]);
     }
 
-    public function singleIndex(){
-          $product = Product::where('id',16)->with(['category','subcategory','attribute.size','brand','attribute.color'])->first();
-         return response()->json([
-              "product"=>$product,
-        ]);
-    }
+    // public function singleIndex(){
+    //       $product = Product::where('id',16)->with(['category','subcategory','attribute.size','brand','attribute.color'])->first();
+    //      return response()->json([
+    //           "product"=>$product,
+    //     ]);
+    // }
 
     public function singleProduct($id){
-          $product = Product::where('id',$id)->with(['category','subcategory','attribute.size','brand','attribute.color'])->first();
+          $product = Product::where('id',$id)->with(['category','subcategory','brand',])->first();
+           $attribute = Attribute::where("product_id",$id)->with(['color','size'])->groupBy("color_id")->get(); 
          return response()->json([
               "product"=>$product,
+               "attribute"=>$attribute,
+
         ]);
     }
-//  public function singleProduct($id){
-//           $product = Product::where('id',$id)->with(['category','subcategory','brand'])->first();
-//           $attribute = Attribute::where("product_id",$id)->with(['color','size'])->groupBy("color_id")->get();
-//          return response()->json([
-//               "product"=>$product,
-//               "attribute"=>$attribute,
-//         ]);
-//     }
+ public function singleIndex(){
+          $product = Product::where('id',16)->with(['category','subcategory','brand'])->first();
+          $attributeColor = Attribute::where("product_id",16)->with(['color','size'])->groupBy("color_id")->get();
+          $attributeSize = Attribute::where("product_id",16)->with(['color','size'])->groupBy("size_id")->get();
+         return response()->json([
+              "product"=>$product,
+              "attributeColor"=>$attributeColor,
+              "attributeSize"=>$attributeSize,
+        ]);
+    }
 
         public function colorWiseSize($color_id,$product_id){
 

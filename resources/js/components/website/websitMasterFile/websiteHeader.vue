@@ -65,9 +65,9 @@
 										<li><router-link to="/shop"> Shop </router-link>
 											<ul class="magamenu">
 												<li class="banner"><a href="shop.html"><img src="img/maga1.png" alt="" /></a></li>
-												<li v-for="category,index in categories" :key="index"> <h5> {{category.name}} </h5>
+												<li v-for="category,index in categories" :key="index"><router-link style="cursor:pointer;font-size:20px;" :to="'/category/'+category.id">  {{category.name}}  </router-link>
 													<ul>
-														<li v-for="item ,index in category.subcategory" :key="index" ><a href="#"> {{item.name}} </a></li>
+														<li v-for="item ,index in category.subcategory" :key="index" ><router-link :to="'/subcategory/'+item.id" style="cursor:pointer" > {{item.name}} </router-link></li>
 
 													</ul>
 												</li>
@@ -166,7 +166,7 @@
 						<div class="cart-itmes">
 							<a class="cart-itme-a" href="cart.html">
 								<i class="mdi mdi-cart"> </i>
-                                        
+
 								{{carts.quanty}} items :  <strong> ${{carts.price}} </strong>
 							</a>
 							<div class="cartdrop">

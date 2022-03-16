@@ -28,6 +28,7 @@ import couponEdit from "../components/admin/coupon/couponEdit"
 
 import order from "../components/admin/order/order"
 import orderView from "../components/admin/order/orderView"
+import orderCencel from "../components/admin/order/orderCencel"
 
 
 
@@ -167,6 +168,11 @@ export const routes = [
         path:"/orderView/:id",
         component:orderView,
         name:"orderView"
+    },
+    {
+        path:"/orderCencel",
+        component:orderCencel,
+        name:"orderCencel"
     },
 
 ]

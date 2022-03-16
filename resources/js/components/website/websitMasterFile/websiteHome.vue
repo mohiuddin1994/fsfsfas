@@ -108,7 +108,7 @@
                                             </div>
                                             <a href="#"><img :src="imageShow(product.image)" alt="Product Title" /></a>
                                             <div class="actions-btn">
-                                                <a href="#"><i class="mdi mdi-cart"></i></a>
+                                                <a @click.prevent="addToCart(product)"><i class="mdi mdi-cart"></i></a>
                                                 <a href="#" data-toggle="modal" @click="quickView(product.id)"
                                                     data-target="#quick-view"><i class="mdi mdi-eye"></i></a>
                                                 <a href="#"><i class="mdi mdi-heart"></i></a>
@@ -136,23 +136,23 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4 col-md-2">
-                        <div class="tab-menu nav nav-tabs padding">
+                        <div class="tab-menu nav nav-tabs padding"  v-if="singleProduct.product">
                             <ul>
                                 <li class="active"><a href="#dress1" data-toggle="tab"
-                                        data-target="#dress1, #text1"><img :src="singleImageShow(singleProduct.image)"
+                                        data-target="#dress1, #text1"><img :src="singleImageShow(singleProduct.product.image)"
                                             alt="" /></a></li>
                                 <li><a href="#dress2" data-toggle="tab" data-target="#dress2,#text2"><img
-                                            :src="singleImageShow(singleProduct.image)" alt="" /></a></li>
+                                            :src="singleImageShow(singleProduct.product.image)" alt="" /></a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-sm-7 col-md-5">
-                        <div class="text-center large-img tab-content ">
+                        <div class="text-center large-img tab-content " v-if="singleProduct.product">
                             <div class="tab-pane fade in active" id="dress1">
-                                <img :src="singleImageShow(singleProduct.image)" alt="" height="500px" />
+                                <img :src="singleImageShow(singleProduct.product.image)" alt="" height="500px" />
                             </div>
                             <div class="tab-pane fade" id="dress2">
-                                <img :src="singleImageShow(singleProduct.image)" alt="" />
+                                <img :src="singleImageShow(singleProduct.product.image)" alt="" />
                             </div>
                         </div>
                     </div>
@@ -160,24 +160,24 @@
                         <div class="padding">
                             <div class="tab-content">
                                 <div class="single-coming tab-pane fade in active" id="text1">
-                                    <h4><a href="#">{{singleProduct.name}}</a></h4>
-                                    <span><strong>${{singleProduct.price}}</strong> </span>
-                                    <p class="come-p"> {{singleProduct.description  }} </p>
+                                    <h4><a href="#">{{singleProduct.product?singleProduct.product.name:""}}</a></h4>
+                                    <span><strong>${{singleProduct.product?singleProduct.product.price:""}}</strong> </span>
+                                    <p class="come-p"> {{singleProduct.product?singleProduct.product.description:""  }} </p>
                                     <ul class="color-size">
                                         <li><span>Size</span><strong>:</strong> <a href="#"
-                                                v-for="attribute,index in singleProduct.attribute" :key="index">
+                                                v-for="attribute,index in singleProduct.attributeSize" :key="index">
                                                 {{attribute.size? attribute.size.name:""}} </a>
                                         </li>
                                         <li><span>Color</span><strong>:</strong> <a href="#"
-                                                v-for="attribute,index in singleProduct.attribute" :key="index">
+                                                v-for="attribute,index in singleProduct.attributeColor" :key="index">
                                                 {{attribute.color? attribute.color.name:""}} </a>
                                         </li>
                                         <li><span>Brand</span><strong>:</strong>
-                                            {{singleProduct.brand?singleProduct.brand.name:""}} </li>
+                                            {{singleProduct.product?singleProduct.product.brand.name:""}} </li>
                                         <li><span>category</span><strong>:</strong>
-                                            {{singleProduct.category?singleProduct.category.name:""}} </li>
+                                            {{singleProduct.product?singleProduct.product.category.name:""}} </li>
                                         <li><span>Subcategory</span><strong>:</strong>
-                                            {{singleProduct.subcategory?singleProduct.subcategory.name:""}}</li>
+                                            {{singleProduct.product?singleProduct.product.subcategory.name:""}}</li>
                                     </ul>
                                     <div class="count-text clearfix">
                                         <ul id="countdown-1">
@@ -987,16 +987,16 @@
                                                 <div class="quick-image">
                                                     <div class="single-quick-image text-center">
                                                         <div class="list-img">
-                                                            <div class="product-img tab-content">
+                                                            <div class="product-img tab-content" v-if="quickViews.product">
                                                                 <div class="simpleLens-container tab-pane fade in"
                                                                     id="sin-1">
                                                                     <div class="pro-type">
                                                                         <span>new</span>
                                                                     </div>
                                                                     <a class="simpleLens-image"
-                                                                        :data-lens-image="imageShow(singleProduct.image)"
+                                                                        :data-lens-image="imageShow(quickViews.product.image)"
                                                                         href="#"><img
-                                                                            :src="imageShow(singleProduct.image)" alt=""
+                                                                            :src="imageShow(quickViews.product.image)" alt=""
                                                                             class="simpleLens-big-image"></a>
                                                                 </div>
                                                                 <div class="simpleLens-container tab-pane active fade in"
@@ -1005,9 +1005,9 @@
                                                                         <span>sell</span>
                                                                     </div>
                                                                     <a class="simpleLens-image"
-                                                                        :data-lens-image="imageShow(singleProduct.image)"
+                                                                        :data-lens-image="imageShow(quickViews.product.image)"
                                                                         href="#"><img
-                                                                            :src="imageShow(singleProduct.image)" alt=""
+                                                                            :src="imageShow(quickViews.product.image)" alt=""
                                                                             class="simpleLens-big-image"></a>
                                                                 </div>
                                                                 <div class="simpleLens-container tab-pane fade in"
@@ -1016,9 +1016,9 @@
                                                                         <span>-15%</span>
                                                                     </div>
                                                                     <a class="simpleLens-image"
-                                                                        :data-lens-image="imageShow(singleProduct.image)"
+                                                                        :data-lens-image="imageShow(quickViews.product.image)"
                                                                         href="#"><img
-                                                                            :src="imageShow(singleProduct.image)" alt=""
+                                                                            :src="imageShow(quickViews.product.image)" alt=""
                                                                             class="simpleLens-big-image"></a>
                                                                 </div>
                                                                 <div class="simpleLens-container tab-pane fade in"
@@ -1027,30 +1027,30 @@
                                                                         <span>new</span>
                                                                     </div>
                                                                     <a class="simpleLens-image"
-                                                                        data-lens-image="imageShow(singleProduct.image)"
+                                                                        data-lens-image="imageShow(quickViews.image)"
                                                                         href="#"><img
-                                                                            :src="imageShow(singleProduct.image)" alt=""
+                                                                            :src="imageShow(quickViews.product.image)" alt=""
                                                                             class="simpleLens-big-image"></a>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="quick-thumb">
-                                                        <ul class="product-slider">
+                                                        <ul class="product-slider" v-if="quickViews.product">
 
                                                             <li><a data-toggle="tab" href="#sin-1"> <img
-                                                                        :src="imageShow(singleProduct.image)"
+                                                                        :src="imageShow(quickViews.product.image)"
                                                                         alt="quick view" /> </a></li>
 
                                                             <li class="active"><a data-toggle="tab" href="#sin-2"> <img
-                                                                        :src="imageShow(singleProduct.image)"
+                                                                        :src="imageShow(quickViews.product.image)"
                                                                         alt="small image" /> </a></li>
 
                                                             <li><a data-toggle="tab" href="#sin-3"> <img
-                                                                        :src="imageShow(singleProduct.image)"
+                                                                        :src="imageShow(quickViews.product.image)"
                                                                         alt="small image" /> </a></li>
                                                             <li><a data-toggle="tab" href="#sin-3"> <img
-                                                                        :src="imageShow(singleProduct.image)"
+                                                                        :src="imageShow(quickViews.product.image)"
                                                                         alt="small image" /> </a></li>
 
                                                         </ul>
@@ -1060,8 +1060,8 @@
                                             <div class="col-xs-12 col-sm-7 col-md-8">
                                                 <div class="quick-right">
                                                     <div class="list-text">
-                                                        <h3>{{singleProduct.title}} </h3>
-                                                        <span> {{singleProduct.name}} </span>
+                                                        <h3>{{quickViews.product?quickViews.product.title:''}} </h3>
+                                                        <span> {{quickViews.product?quickViews.product.name:""}} </span>
                                                         <div class="ratting floatright">
                                                             <p>( 27 Rating )</p>
                                                             <i class="mdi mdi-star"></i>
@@ -1071,19 +1071,19 @@
                                                             <i class="mdi mdi-star-outline"></i>
                                                         </div>
 
-                                                        <h5 v-if="justPrice"> {{singleProduct.price}}</h5>
+                                                        <h5 v-if="justPrice"> {{quickViews.product?quickViews.product.price:""}} </h5>
                                                         <h5 v-if="sPrice"> {{sizePrice.price}}</h5>
-                                                        <p>{{singleProduct.description}} </p>
+                                                        <p>{{quickViews.product?quickViews.product.description:""}} </p>
                                                         <div class="all-choose">
-                                                            <div v-if="singleProduct.attribute != 0">
+                                                            <div v-if="quickViews.attribute != 0">
                                                                 <div class="s-shoose">
                                                                     <h5> Color </h5>
                                                                     <div class="color-select clearfix">
                                                                         <li class="mr-2"
                                                                             style="list-style: none;float: left; margin-right:10px;cursor:pointer"
-                                                                            v-for="item,index in singleProduct.attribute"
+                                                                            v-for="item,index in quickViews.attribute"
                                                                             :key="index"> <button
-                                                                                @click.prevent="getSize(item.color.id,singleProduct.id)">
+                                                                                @click.prevent="getSize(item.color.id,quickViews.product.id)">
                                                                                 {{item.color.name}} </button> </li>
 
                                                                     </div>
@@ -1107,7 +1107,7 @@
                                                                                 <li v-for="size , index in sizes"
                                                                                     :key="index"><a
                                                                                         style="cursor:pointer"
-                                                                                        @click.prevent="sizeWisePrice(size.id, size.size.id ,singleProduct.id)">
+                                                                                        @click.prevent="sizeWisePrice(size.id, size.size.id ,quickViews.product.id)">
                                                                                         {{size.size.name}} </a>
 
                                                                                 </li>
@@ -1126,7 +1126,7 @@
                                                                     </div>
 
                                                                     <div class="list-btn">
-                                                                        <a href="#" @click.prevent="addToCart">add to
+                                                                        <a href="#" @click.prevent="addToCart(quickViews)">add to
                                                                             cart</a>
                                                                         <a href="#">wishlist</a>
                                                                         <a href="#">zoom</a>
@@ -1178,9 +1178,11 @@
         data() {
             return {
                 sizes: [],
+                quickViews: {},
                 sizePrice: "",
                 justPrice: true,
                 sPrice: false,
+                price: 0,
                 cart: {
                     price: "",
                     quanty: "",
@@ -1207,6 +1209,15 @@
 
         },
         methods: {
+              addToCart(product) {
+                  if(product.attribute != 0){
+                       console.log("attribute accay ");
+                  }else{
+                      console.log("attribute nai")
+                  }
+
+
+            },
             imageShow(img) {
                 return "image/" + img
             },
@@ -1214,7 +1225,10 @@
                 return "image/" + img
             },
             quickView(id) {
-                this.$store.dispatch('quickView', id)
+
+                 axios.get("/web/quickView/"+id).then((res) => {
+                      this.quickViews = res.data
+                 })
             },
             getSize(color_id, product_id) {
                 axios.get("/web/colroWiseSize/" + color_id + '/' + product_id).then((res) => {
@@ -1234,10 +1248,7 @@
                     }
                 })
             },
-            addToCart() {
-                console.log(this.cart.price);
-                console.log(this.cart.quanty);
-            }
+
 
         }
     }

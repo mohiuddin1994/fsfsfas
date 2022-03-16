@@ -4,6 +4,7 @@ namespace App\Http\Controllers\website;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderCencel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -204,6 +205,35 @@ class userController extends Controller
             "order"=>$order,
         ]);
      }
+     // order cencel
+     public function orderCencel($id){
+         $date = date("Y/m/d");
+         $orderCencel =new OrderCencel();
+         $orderCencel ->user_id = Auth::user()->id;
+         $orderCencel ->order_id = $id;
+         $orderCencel ->apllie_date = $date;
+         $orderCencel ->statu = "pending";
+         $orderCencel->save();
+         return response()->json([
+             "orderCencel" => $orderCencel,
+         ]);
+     }
+    //  user order cencele index
+      public function userOrderCencelIndex(){
+
+        $auth = Auth::user();
+        $userOrderCencel = OrderCencel::with(['user',"order"])->where("user_id",$auth->id)->get();
+         return response()->json([
+             "userOrderCencel" => $userOrderCencel,
+         ]);
+     }
+    //  re order user
+    public function reorder($id){
+        $userOrderCencel = OrderCencel::where("id",$id)->delete();
+          return response()->json([
+             "userOrderCencel" => $userOrderCencel,
+         ]);
+    }
 
 
 }

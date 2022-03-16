@@ -75,7 +75,7 @@
                                 <td >
 
                                 <router-link :to='"/userOrderView/"+order.id' class="btn btn-success"> view </router-link>
-                                    <button class="btn btn-success" @click="orderCencel()" > Cencel Order </button>
+                                    <button class="btn btn-success" @click="orderCencel(order.id)" > Cencel Order </button>
 
                                  </td>
                             </tr>
@@ -94,11 +94,25 @@
 </template>
 
 <script>
+import axios from 'axios'
     export default {
         data() {
             return {
 
             }
+        },
+        methods:{
+            orderCencel(id){
+                axios.post("web/orderCencel/"+id).then((res)=>{
+                    if(res.data.orderCencel){
+                        Toast.fire({
+                            icon:"success",
+                            title:"order cencel apllied",
+                        })
+                    }
+                     
+                })
+          }
         },
         computed: {
             user() {

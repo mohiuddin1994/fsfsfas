@@ -11,6 +11,8 @@ import shop from "../components/website/page/shopPage"
 import wishList from "../components/website/page/wishList"
 import cart from "../components/website/page/cart"
 import checkout from "../components/website/page/checkout"
+import category from "../components/website/page/category"
+import subcategory from "../components/website/page/subcategory"
 
 
 export const routes = [
@@ -80,10 +82,22 @@ export const routes = [
         name:"userSetting",
 
     },
-      {
+    {
         path:"/userOrderView/:id",
         component:userOrderView,
         name:"userOrderView",
+
+    },
+    {
+        path:"/category/:id",
+        component:category,
+        name:"category",
+
+    },
+    {
+        path:"/subcategory/:id",
+        component:subcategory,
+        name:"subcategory",
 
     },
 

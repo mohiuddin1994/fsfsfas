@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Order_item;
 use App\Models\Order_log;
+use App\Models\OrderCencel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
@@ -27,7 +28,7 @@ class orderController extends Controller
         $order = new Order();
 
         $order->user_id = $user_id;
-        $order->invoice_no = rand(123456789,123456789);
+        $order->invoice_no = rand(1234567,123456789);
         if($cart['subtotal'] && $cart['discount'] && $cart['total']){
             $order->subtotal = $cart['subtotal'];
             $order->discount = $cart['discount'];
@@ -114,5 +115,48 @@ class orderController extends Controller
         ]);
     }
 
+    // all order cencel
+    public function orderCencel(){
+        $orderCencel = OrderCencel::with(['user','order.orderItem','order'])->get();
+        return response()->json([
+            "orderCencel" => $orderCencel,
+        ]);
+    }
+    // all order cencel
+    public function cencelOrder(){
+        $orderCencel = OrderCencel::with(['user','order.orderItem','order'])->get();
+        return response()->json([
+            "orderCencel" => $orderCencel,
+        ]);
+    }
+    public function orderCencelStatu(Request $request){
+
+         if($request->statu['statu'] === "Cencel Order"){
+             $order = Order::where("id",$request->orderCencel['order_id'])->delete();
+
+            $order_item = Order_item::where("order_id",$request->orderCencel['order_id'])->get();
+            foreach($order_item as $item){
+                $item->delete();
+            }
+             $date = date("Y/m/d");
+            $orderCencel = OrderCencel::where("id",$request->orderCencel['id'])->first();
+            $orderCencel ->statu = $request->statu['statu'];
+            $orderCencel ->statu_date  = $date;
+            $orderCencel->save();
+            return response()->json([
+                "orderCencel" => $orderCencel,
+            ]);
+         }else{
+            $date = date("Y/m/d");
+            $orderCencel = OrderCencel::where("id",$request->orderCencel['id'])->first();
+            $orderCencel ->statu = $request->statu['statu'];
+            $orderCencel ->statu_date  = $date;
+            $orderCencel->save();
+            return response()->json([
+                "orderCencel" => $orderCencel,
+            ]);
+         }
+
+    }
 
 }

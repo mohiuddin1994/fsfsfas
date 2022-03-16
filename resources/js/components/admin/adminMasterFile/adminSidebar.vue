@@ -235,6 +235,14 @@
                                     </router-link>
                                 </li>
 
+                                 <li class="nav-item">
+                                    <router-link to="/orderCencel" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Order Cencel</p>
+                                    </router-link>
+                                </li>
+
+
                             </ul>
                         </li>
                         <li class="nav-item">

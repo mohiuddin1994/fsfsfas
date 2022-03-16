@@ -1,4 +1,4 @@
-<template>
+ <template>
     <div>
 
         <!--[if lt IE 8]>
@@ -63,90 +63,8 @@
 			<div class="container">
 
 				<div class="row">
-					<div class="col-xs-12 col-sm-4 col-md-3">
-						<div class="sidebar left-sidebar">
-							<div class="s-side-text">
-								<div class="sidebar-title clearfix" @click.prevent="allProductShowClick">
-									<h4 class="floatleft">Categories</h4>
-									<h5 class="floatright"><a> All </a></h5>
-								</div>
-								<div class="categories left-right-p">
-									<ul id="accordion" class="panel-group clearfix">
-										<li class="panel"   v-for="category,index in categories" :key="index">
-											<div data-toggle="collapse" data-parent="#accordion"  @click="showItem(category.id)" >
-												<div class="medium-a" @click="productFilter(category.id,'category_id')" >
-													{{category.name}}
-												</div>
-											</div>
 
-											<div class="panel-collapse collapse in" v-if="statusShowItem">
-												<div class="normal-a">
-													<a v-for="item ,index in category.subcategory" :key="index" > <span style="cursor:pointer" @click="productFilter(item.id,'subcategory_id')" > {{item.name}} </span> </a>
-
-												</div>
-											</div>
-
-
-
-										</li>
-
-									</ul>
-								</div>
-							</div>
-							<div class="s-side-text">
-								<div class="sidebar-title">
-									<h4>price</h4>
-								</div>
-								<div class="range-slider clearfix" v-if="sideBarInfo.price">
-									<form action="#" method="get">
-										<label><span>Price $ {{sideBarInfo.price.min}}  - $ {{sideBarInfo.price.max}}  ( $ {{price}})   </span> <br>
-
-                                        <input @change.prevent="productFilter('','price', sideBarInfo.price.min,sideBarInfo.price.max)" :min="sideBarInfo.price.min" :max="sideBarInfo.price.max" value="0" class="form-controll" v-model="price" type="range" id="" style="width:229px"  /> </label>
- 									</form>
-								</div>
-							</div>
-							<div class="s-side-text">
-								<div class="sidebar-title clearfix" @click="ShowSize">
-									<h4 class="floatleft">size</h4>
-									<h5 class="floatright"><a>All</a></h5>
-								</div>
-                                <div v-if="sizeToggle">
-                                    <div class="size-select clearfix"  v-for="size,index in allSizes" :key="index">
-                                        <a style="cursor:pointer" @click="productFilter(size.id,'size_id')" >{{size.name}} </a>
-
-                                    </div>
-                                </div>
-							</div>
-							<div class="s-side-text">
-								<div class="sidebar-title clearfix" @click="colorShow">
-									<h4 class="floatleft">color</h4>
-									<h5 class="floatright" ><a>All</a></h5>
-								</div>
-                                <div v-if="colorToggle">
-                                    <div class="color-select clearfix" v-for="color,index in allColors" :key="index" >
-                                        <a @click="productFilter(color.id,'color_id')"> {{color.name}} </a>
-
-                                    </div>
-                                </div>
-							</div>
-							<div class="s-side-text">
-								<div class="sidebar-title clearfix" @click="brandShow">
-									<h4 class="floatleft">brands</h4>
-									<h5 class="floatright"><a>All</a></h5>
-								</div>
-								<div class="brands-select clearfix" v-if="brandToggle">
-									<ul>
-										<li v-for="brand,index in allBrands" :key="index">
-											<a @click="productFilter(brand.id,'brand_id')" >{{brand.name}}</a>
-										</li>
-
-									</ul>
-								</div>
-							</div>
-
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-8 col-md-9">
+					<div class="col-xs-12 col-sm-12 col-md-12">
 						<div class="right-products">
 							<div class="row">
 								<div class="col-xs-12">
@@ -168,7 +86,7 @@
 							<div class="row">
 								<div class="tab-content grid-content">
 									<div class="tab-pane fade in active text-center" id="grid">
-										<div class="col-xs-12 col-sm-6 col-md-4" v-for="product,index in products" :key="index">
+										<div class="col-xs-12 col-sm-6 col-md-4" v-for="product,index in categoryProducts" :key="index">
 											<div class="single-product">
 												<div class="product-img">
 													<div class="pro-type">
@@ -200,7 +118,7 @@
 									</div>
 									<div class="tab-pane fade in" id="list">
 										<div class="col-xs-12">
-											<div class="single-list-view" v-for="product,index in products" :key="index">
+											<div class="single-list-view" v-for="product,index in categoryProducts" :key="index">
 												<div class="row">
 													<div class="col-xs-12 col-md-4">
 														<div class="list-img">
@@ -268,165 +186,7 @@
 
 		<!-- product-grid-view content section end -->
         <!-- quick view start -->
-		<div class="product-details quick-view modal animated zoomInUp" id="quick-view">
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-12">
-						<div class="d-table">
-							<div class="d-tablecell">
-								<div class="modal-dialog">
-									<div class="main-view modal-content">
-										<div class="modal-footer" data-dismiss="modal" @click.prevent="priceNull">
-											<span> x </span>
-										</div>
-										<div class="row">
-											<div class="col-xs-12 col-sm-5 col-md-4">
-												<div class="quick-image">
-													<div class="single-quick-image text-center">
-														<div class="list-img">
-															<div class="product-img tab-content">
-																<div class="simpleLens-container tab-pane fade in" id="q-sin-1">
-																	<div class="pro-type">
-																		<span>new</span>
-																	</div>
-																	<a class="simpleLens-image" :data-lens-image="showImge(quickProduct.product?quickProduct.product.image:'')" href="#"><img :src="showImge(quickProduct.product?quickProduct.product.image:'')" alt="" class="simpleLens-big-image"></a>
-																</div>
-																<div class="simpleLens-container tab-pane active fade in" id="q-sin-2">
-																	<div class="pro-type sell">
-																		<span>sell</span>
-																	</div>
-																	<a class="simpleLens-image" :data-lens-image="showImge(quickProduct.product?quickProduct.product.image:'')" href="#"><img :src="showImge(quickProduct.product?quickProduct.product.image:'')" alt="" class="simpleLens-big-image"></a>
-																</div>
-																<div class="simpleLens-container tab-pane fade in" id="q-sin-3">
-																	<div class="pro-type">
-																		<span>-15%</span>
-																	</div>
-																	<a class="simpleLens-image" :data-lens-image="showImge(quickProduct.product?quickProduct.product.image:'')"  href="#"><img :src="showImge(quickProduct.product?quickProduct.product.image:'')" alt="" class="simpleLens-big-image"></a>
-																</div>
-																<div class="simpleLens-container tab-pane fade in" id="q-sin-4">
-																	<div class="pro-type">
-																		<span>new</span>
-																	</div>
-																	<a class="simpleLens-image" :data-lens-image="showImge(quickProduct.product?quickProduct.product.image:'')"  href="#"><img :src="showImge(quickProduct.product?quickProduct.product.image:'')" alt="" class="simpleLens-big-image"></a>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="quick-thumb">
-														<ul class="product-slider">
-															<li><a data-toggle="tab" href="#q-sin-1"> <img :src="showImge(quickProduct.product?quickProduct.product.image:'')" alt="quick view" /> </a></li>
-															<li class="active"><a data-toggle="tab" href="#q-sin-2"> <img :src="showImge(quickProduct.product?quickProduct.product.image:'')" alt="small image" /> </a></li>
-															<li><a data-toggle="tab" href="#q-sin-3"> <img :src="showImge(quickProduct.product?quickProduct.product.image:'')" alt="small image" /> </a></li>
-															<li><a data-toggle="tab" href="#q-sin-4"> <img :src="showImge(quickProduct.product?quickProduct.product.image:'')" alt="small image" /> </a></li>
-														</ul>
-													</div>
-												</div>
-											</div>
-											<div class="col-xs-12 col-sm-7 col-md-8">
-												<div class="quick-right">
-													<div class="list-text">
-														<h3>{{quickProduct.product?quickProduct.product.title:""}} </h3>
-														<span> {{quickProduct.product?quickProduct.product.name:""}} </span>
-														<div class="ratting floatright">
-															<p>( 27 Rating )</p>
-															<i class="mdi mdi-star"></i>
-															<i class="mdi mdi-star"></i>
-															<i class="mdi mdi-star"></i>
-															<i class="mdi mdi-star-half"></i>
-															<i class="mdi mdi-star-outline"></i>
-														</div>
-														<h5 v-if="justPrice">{{quickProduct.product?quickProduct.product.price:""}}</h5>
 
-                                                        <h5 v-if="sPrice">{{attribute ? attribute.price:""}}</h5>
-
-														<p>{{quickProduct.product?quickProduct.product.description:""}}</p>
-
-														<div class="all-choose">
-                                                                 <div v-if="quickProduct.attribute != 0">
-                                                                <div class="s-shoose">
-                                                                    <h5> Color </h5>
-                                                                    <div class="color-select clearfix">
-                                                                        <li class="mr-2"
-                                                                            style="list-style: none;float: left; margin-right:10px;cursor:pointer"
-                                                                            v-for="item,index in quickProduct.attribute"
-                                                                            :key="index"> <button   @click.prevent="getSizeShop(item.color.id,item.product_id)" >
-
-                                                                                {{item.color.name}} </button> </li>
-
-                                                                    </div>
-                                                                </div>
-                                                                <div class="s-shoose">
-                                                                    <h5>size</h5>
-
-                                                                    <div class="size-drop">
-                                                                        <div class="btn-group">
-                                                                            <button type="button"
-                                                                                class="btn">size</button>
-                                                                            <button type="button"
-                                                                                class="btn dropdown-toggle"
-                                                                                data-toggle="dropdown"
-                                                                                aria-haspopup="true"
-                                                                                aria-expanded="false">
-                                                                                <span class=""><i
-                                                                                        class="mdi mdi-chevron-down"></i></span>
-                                                                            </button>
-                                                                            <ul class="dropdown-menu">
-                                                                                 <li v-for="size , index in sizes"
-                                                                                    :key="index"> <a
-                                                                                        style="cursor:pointer"
-                                                                                        @click.prevent="shopSizeWisePrice(size.id, size.size.id , size.product_id)" >
-                                                                                         {{size.size.name}} </a>
-
-                                                                                </li>
-
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-														</div>
-                                                        <div class="s-shoose">
-																<h5>qty</h5>
-																<form action="#" method="POST">
-																	<div class="plus-minus">
-																		<a class="dec qtybutton">-</a>
-																		<input type="text" value="01" name="qtybutton" v-model="cart.quanty" class="plus-minus-box">
-																		<a class="inc qtybutton">+</a>
-																	</div>
-																</form>
-															</div>
-														<div class="list-btn">
-															<a href="#" v-if="quickProduct.attribute != 0" @click="addToCart(quickProduct.product,quickProduct.attribute)"  >A add to cart </a>
-															<a href="#" v-else @click="addToCart(quickProduct.product)"  >add to cart </a>
-
-															<a href="#" v-if="quickProduct.attribute != 0" @click="wishListProduct(quickProduct.product,quickProduct.attribute)"  >  wishlist</a>
-															<a href="#" v-else @click="wishListProduct(quickProduct.product)"  >wishlist</a>
-															<a href="#" data-toggle="modal" data-target="#quick-view">zoom</a>
-														</div>
-														<div class="share-tag clearfix">
-															<ul class="blog-share floatleft">
-																<li><h5>share </h5></li>
-																<li><a href="#"><i class="mdi mdi-facebook"></i></a></li>
-																<li><a href="#"><i class="mdi mdi-twitter"></i></a></li>
-																<li><a href="#"><i class="mdi mdi-linkedin"></i></a></li>
-																<li><a href="#"><i class="mdi mdi-vimeo"></i></a></li>
-																<li><a href="#"><i class="mdi mdi-dribbble"></i></a></li>
-																<li><a href="#"><i class="mdi mdi-instagram"></i></a></li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 		<!-- quick view end -->
         <!-- footer section start -->
 		<footer class="footer-two">
@@ -503,6 +263,7 @@ import axios from 'axios'
             return{
 
                 sizes:[],
+                multiCategory:[],
                 attribute : "",
                 price : "0",
                 justPrice : true,
@@ -529,6 +290,8 @@ import axios from 'axios'
             }
         },
         computed:{
+
+
              user(){
                 return this.$store.getters.loginUser
             },
@@ -536,44 +299,29 @@ import axios from 'axios'
              quickProduct(){
                 return this.$store.getters.quickShopProducts
             },
-            allProductShowClick(){
-                this.$store.dispatch("allProduct")
-            },
-            products(){
-                return this.$store.getters.productsAllIn
-            },
-              singleProduct(){
-                return this.$store.getters.singleProduct
-            },
-             categories(){
-                return this.$store.getters.category
-            },
-             allSizes(){
-                return this.$store.getters.getSize
-            },
-             allColors(){
-                return this.$store.getters.colors
-            },
-            allBrands(){
-                return this.$store.getters.brands
-            },
-             sideBarInfo(){
-                return this.$store.getters.allSideBarInfo
-            }
+            categoryProducts(){
+              return this.$store.getters.categoryProduct
+             }
 
         },
         mounted(){
-            this.$store.dispatch("allProduct")
-            this.$store.dispatch("singleProduct")
-            this.$store.dispatch("category")
-            this.$store.dispatch("allColor")
-            this.$store.dispatch("allSize")
-            this.$store.dispatch("allBrand")
-            this.$store.dispatch("sideBarInfo")
+
+                this.categoryProduct()
         },
+         watch:{
+             multiCategory: function(selected){
+                 console.log("ok");
+             }
+
+         },
+
+
 
 
         methods:{
+            categoryProduct(){
+                  this.$store.dispatch("categoryProduct",this.$route.params.id)
+            },
 				addToCart(product){
 					if(this.cart.color_id && this.cart.size_id){
 							let data ={
@@ -689,7 +437,7 @@ import axios from 'axios'
                 return "image/"+img
             },
             quickViewProduct(id){
-                
+
                 this.$store.dispatch("quickViewProduct",id)
             },
 
@@ -715,22 +463,7 @@ import axios from 'axios'
 
             },
 
-            brandShow(){
-                this.brandToggle =! this.brandToggle
-            },
-            ShowSize(){
-                this.sizeToggle =! this.sizeToggle
-            },
 
-            colorShow(){
-                this.colorToggle =! this.colorToggle
-            },
-
-			showItem(id){
-
-				this.statusShowItem =! this.statusShowItem
-
-			},
 
 
             shopImage(img){
@@ -766,5 +499,4 @@ import axios from 'axios'
         }
     }
 </script>
-
 

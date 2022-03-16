@@ -15,6 +15,8 @@ export const storeData = {
         wishList: {},
         cart: {},
         userOrder: {},
+        userOrderCencel: {},
+        categoryProduct: {},
 
     },
     getters: {
@@ -55,6 +57,13 @@ export const storeData = {
         },
         userOrder(state) {
             return state.userOrder
+        },
+
+        userOrderCencel(state) {
+            return state.userOrderCencel
+        },
+        categoryProduct(state) {
+            return state.categoryProduct
         }
 
 
@@ -85,7 +94,8 @@ export const storeData = {
         },
         singleProduct(context) {
             axios.get("/web/singleProduct").then((res) => {
-                context.commit("singleProduct",res.data.product)
+                console.log(res.data)
+                context.commit("singleProduct",res.data)
             })
         },
          category(context) {
@@ -94,11 +104,11 @@ export const storeData = {
                 context.commit("category",res.data.category)
             })
         },
-          quickView(context,payload) {
-            axios.get("/web/quickView/"+payload).then((res) => {
-              context.commit("singleProduct",res.data.product)
-            })
-        },
+        //   quickView(context,payload) {
+        //     axios.get("/web/quickView/"+payload).then((res) => {
+        //       context.commit("singleProduct",res.data)
+        //     })
+        // },
 
         allColor(context) {
             axios.get("/web/allColor/").then((res) => {
@@ -144,18 +154,33 @@ export const storeData = {
                 context.commit("wishList", res.data.wishList)
                })
         },
+        // cart store
         cart(context) {
             axios.get("web/cart").then((res) => {
                 context.commit("cart",res.data)
                 console.log(res.data);
             })
         },
-        // user order get
+        // user order get userOrderCencel
         userOrder(context) {
             axios.get("/web/userOrder").then((res) => {
                 context.commit("userOrder",res.data.order)
             })
-        }
+        },
+        // order cencel
+         userOrderCencel(context) {
+            axios.get("/web/userOrderCencel").then((res) => {
+                context.commit("userOrderCencel",res.data.userOrderCencel)
+            })
+        },
+
+         // cateogory product
+        categoryProduct(context,payload) {
+            axios.get("web/categoryProduct/"+payload).then((res) => {
+                console.log(res.data)
+                context.commit('categoryProduct',res.data.categoryProduct)
+             })
+         }
 
 
     },
@@ -197,9 +222,18 @@ export const storeData = {
         cart(state, data) {
             return state.cart = data
         },
+        // userOrderCencel
         userOrder(state, data) {
             return state.userOrder = data
-        }
+        },
+         userOrderCencel(state, data) {
+            return state.userOrderCencel = data
+         },
+
+         // category product
+         categoryProduct(state, data) {
+             return state.categoryProduct = data
+         }
     }
 }
 
