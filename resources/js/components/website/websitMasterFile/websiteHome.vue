@@ -979,11 +979,12 @@
                             <div class="d-tablecell">
                                 <div class="modal-dialog">
                                     <div class="main-view modal-content">
-                                        <div class="modal-footer" data-dismiss="modal">
+                                        <div class="modal-footer" data-dismiss="modal" @click="priceNull()" >
                                             <span>x</span>
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-12 col-sm-5 col-md-4">
+
                                                 <div class="quick-image">
                                                     <div class="single-quick-image text-center">
                                                         <div class="list-img">
@@ -1182,12 +1183,17 @@
                 sizePrice: "",
                 justPrice: true,
                 sPrice: false,
-                price: 0,
-                cart: {
-                    price: "",
-                    quanty: "",
-                    product_id: "",
-                    attribute_id: "",
+                price: "0",
+               cart:{
+					color_id:'',
+					size_id:'',
+					quanty :"",
+
+				},
+                whishList:{
+                    user_id:'',
+                    product_id:'',
+                    attribute:'',
                 }
             }
         },
@@ -1209,15 +1215,78 @@
 
         },
         methods: {
-              addToCart(product) {
-                  if(product.attribute != 0){
-                       console.log("attribute accay ");
-                  }else{
-                      console.log("attribute nai")
-                  }
+             	addToCart(product){
+					if(this.cart.color_id && this.cart.size_id){
+							let data ={
+							attribute : this.attribute,
+							quanty : this.cart.quanty,
+						}
+						axios.post("web/addToCart",data).then((res)=>{
+                            this.$store.dispatch("cart")
+							if(res.data.product){
+                                  Toast.fire({
+                                    icon: 'success',
+                                    title: ' product Add To Cart '
+                                })
+                            }else if(res.data.quanty){
+                                  Toast.fire({
+                                    icon: 'success',
+                                    title: 'Quanty Update '
+                                    })
+                            }else if(res.data.stock){
+                                  Toast.fire({
+                                    icon: 'success',
+                                    title: ' Out of Stock '
+                                    })
+                            }
+						})
 
+					}else{
+						let data ={
+							product : product,
+							quanty : this.cart.quanty,
+						}
+						axios.post("web/addToCart",data).then((res)=>{
+                            this.$store.dispatch("cart")
+							if(res.data.product){
+                                  Toast.fire({
+                                    icon: 'success',
+                                    title: ' product Add To Cart '
+                                })
+                            }else if(res.data.quanty){
+                                  Toast.fire({
+                                    icon: 'success',
+                                    title: 'Quanty Update '
+                                    })
+                            }else if(res.data.stock){
+                                  Toast.fire({
+                                    icon: 'success',
+                                    title: ' Out of Stock '
+                                    })
+                            }
+						})
+					}
+
+
+
+				},
+            priceNull(){
+                 this.justPrice = true
+                this.sPrice = false
+                this.sizePrice = ""
+                this.whishList={
+                     user_id:'',
+                    product_id:'',
+                    attribute:'',
+                },
+				this.cart={
+					color_id:'',
+					size_id:''
+
+				}
 
             },
+
             imageShow(img) {
                 return "image/" + img
             },
@@ -1240,6 +1309,8 @@
                 axios.get("/web/sizeWisePrice/" + attribute_id + "/" + size_id + "/" + product_id).then((res) => {
                     this.sizePrice = res.data.attribute
                     if (this.sizePrice != null) {
+                        this.cart.color_id = res.data.attribute.color_id
+                        this.cart.size_id = res.data.attribute.size_id
                         this.justPrice = false
                         this.sPrice = true
                     } else {

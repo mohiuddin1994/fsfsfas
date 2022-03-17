@@ -682,6 +682,7 @@ import axios from 'axios'
                 axios.get("/web/colroWiseSizeShop/" + color_id + '/' + product_id).then((res) => {
 					this.cart.color_id = color_id
                     this.sizes = res.data.attribute
+                    
                 })
             },
 
@@ -689,7 +690,7 @@ import axios from 'axios'
                 return "image/"+img
             },
             quickViewProduct(id){
-                
+
                 this.$store.dispatch("quickViewProduct",id)
             },
 

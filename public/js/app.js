@@ -9834,6 +9834,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -9843,12 +9844,16 @@ __webpack_require__.r(__webpack_exports__);
       sizePrice: "",
       justPrice: true,
       sPrice: false,
-      price: 0,
+      price: "0",
       cart: {
-        price: "",
-        quanty: "",
-        product_id: "",
-        attribute_id: ""
+        color_id: '',
+        size_id: '',
+        quanty: ""
+      },
+      whishList: {
+        user_id: '',
+        product_id: '',
+        attribute: ''
       }
     };
   },
@@ -9866,11 +9871,72 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addToCart: function addToCart(product) {
-      if (product.attribute != 0) {
-        console.log("attribute accay ");
+      var _this = this;
+
+      if (this.cart.color_id && this.cart.size_id) {
+        var data = {
+          attribute: this.attribute,
+          quanty: this.cart.quanty
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("web/addToCart", data).then(function (res) {
+          _this.$store.dispatch("cart");
+
+          if (res.data.product) {
+            Toast.fire({
+              icon: 'success',
+              title: ' product Add To Cart '
+            });
+          } else if (res.data.quanty) {
+            Toast.fire({
+              icon: 'success',
+              title: 'Quanty Update '
+            });
+          } else if (res.data.stock) {
+            Toast.fire({
+              icon: 'success',
+              title: ' Out of Stock '
+            });
+          }
+        });
       } else {
-        console.log("attribute nai");
+        var _data = {
+          product: product,
+          quanty: this.cart.quanty
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("web/addToCart", _data).then(function (res) {
+          _this.$store.dispatch("cart");
+
+          if (res.data.product) {
+            Toast.fire({
+              icon: 'success',
+              title: ' product Add To Cart '
+            });
+          } else if (res.data.quanty) {
+            Toast.fire({
+              icon: 'success',
+              title: 'Quanty Update '
+            });
+          } else if (res.data.stock) {
+            Toast.fire({
+              icon: 'success',
+              title: ' Out of Stock '
+            });
+          }
+        });
       }
+    },
+    priceNull: function priceNull() {
+      this.justPrice = true;
+      this.sPrice = false;
+      this.sizePrice = "";
+      this.whishList = {
+        user_id: '',
+        product_id: '',
+        attribute: ''
+      }, this.cart = {
+        color_id: '',
+        size_id: ''
+      };
     },
     imageShow: function imageShow(img) {
       return "image/" + img;
@@ -9879,32 +9945,34 @@ __webpack_require__.r(__webpack_exports__);
       return "image/" + img;
     },
     quickView: function quickView(id) {
-      var _this = this;
+      var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/web/quickView/" + id).then(function (res) {
-        _this.quickViews = res.data;
+        _this2.quickViews = res.data;
       });
     },
     getSize: function getSize(color_id, product_id) {
-      var _this2 = this;
+      var _this3 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/web/colroWiseSize/" + color_id + '/' + product_id).then(function (res) {
         console.log(res.data.attribute);
-        _this2.sizes = res.data.attribute;
+        _this3.sizes = res.data.attribute;
       });
     },
     sizeWisePrice: function sizeWisePrice(attribute_id, size_id, product_id) {
-      var _this3 = this;
+      var _this4 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/web/sizeWisePrice/" + attribute_id + "/" + size_id + "/" + product_id).then(function (res) {
-        _this3.sizePrice = res.data.attribute;
+        _this4.sizePrice = res.data.attribute;
 
-        if (_this3.sizePrice != null) {
-          _this3.justPrice = false;
-          _this3.sPrice = true;
+        if (_this4.sizePrice != null) {
+          _this4.cart.color_id = res.data.attribute.color_id;
+          _this4.cart.size_id = res.data.attribute.size_id;
+          _this4.justPrice = false;
+          _this4.sPrice = true;
         } else {
-          _this3.justPrice = true;
-          _this3.sPrice = false;
+          _this4.justPrice = true;
+          _this4.sPrice = false;
         }
       });
     }
@@ -66842,7 +66910,19 @@ var render = function () {
                 _c("div", { staticClass: "d-tablecell" }, [
                   _c("div", { staticClass: "modal-dialog" }, [
                     _c("div", { staticClass: "main-view modal-content" }, [
-                      _vm._m(12),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "modal-footer",
+                          attrs: { "data-dismiss": "modal" },
+                          on: {
+                            click: function ($event) {
+                              return _vm.priceNull()
+                            },
+                          },
+                        },
+                        [_c("span", [_vm._v("x")])]
+                      ),
                       _vm._v(" "),
                       _c("div", { staticClass: "row" }, [
                         _c(
@@ -66873,7 +66953,7 @@ var render = function () {
                                                 attrs: { id: "sin-1" },
                                               },
                                               [
-                                                _vm._m(13),
+                                                _vm._m(12),
                                                 _vm._v(" "),
                                                 _c(
                                                   "a",
@@ -66914,7 +66994,7 @@ var render = function () {
                                                 attrs: { id: "sin-2" },
                                               },
                                               [
-                                                _vm._m(14),
+                                                _vm._m(13),
                                                 _vm._v(" "),
                                                 _c(
                                                   "a",
@@ -66955,7 +67035,7 @@ var render = function () {
                                                 attrs: { id: "sin-3" },
                                               },
                                               [
-                                                _vm._m(15),
+                                                _vm._m(14),
                                                 _vm._v(" "),
                                                 _c(
                                                   "a",
@@ -66996,7 +67076,7 @@ var render = function () {
                                                 attrs: { id: "sin-4" },
                                               },
                                               [
-                                                _vm._m(16),
+                                                _vm._m(15),
                                                 _vm._v(" "),
                                                 _c(
                                                   "a",
@@ -67161,7 +67241,7 @@ var render = function () {
                                   ),
                                 ]),
                                 _vm._v(" "),
-                                _vm._m(17),
+                                _vm._m(16),
                                 _vm._v(" "),
                                 _vm.justPrice
                                   ? _c("h5", [
@@ -67275,7 +67355,7 @@ var render = function () {
                                                     [_vm._v("size")]
                                                   ),
                                                   _vm._v(" "),
-                                                  _vm._m(18),
+                                                  _vm._m(17),
                                                   _vm._v(" "),
                                                   _c(
                                                     "ul",
@@ -67422,7 +67502,7 @@ var render = function () {
                                   ]),
                                 ]),
                                 _vm._v(" "),
-                                _vm._m(19),
+                                _vm._m(18),
                               ]),
                             ]),
                           ]
@@ -69544,16 +69624,6 @@ var staticRenderFns = [
           ]),
         ]),
       ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "modal-footer", attrs: { "data-dismiss": "modal" } },
-      [_c("span", [_vm._v("x")])]
     )
   },
   function () {
