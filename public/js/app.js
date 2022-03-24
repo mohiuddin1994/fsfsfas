@@ -9835,6 +9835,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -9863,6 +9870,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     singleProduct: function singleProduct() {
       return this.$store.getters.singleProduct;
+    },
+    user: function user() {
+      return this.$store.getters.loginUser;
     }
   },
   mounted: function mounted() {
@@ -9923,6 +9933,34 @@ __webpack_require__.r(__webpack_exports__);
             });
           }
         });
+      }
+    },
+    wishListProduct: function wishListProduct(product, attribute) {
+      if (this.user) {
+        if (attribute) {
+          this.whishList.user_id = this.user.id;
+          this.whishList.product_id = product.id;
+          this.whishList.attribute = attribute;
+        } else {
+          this.whishList.user_id = this.user.id;
+          this.whishList.product_id = product.id;
+        }
+
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post('web/whshList', this.whishList).then(function (res) {
+          if (res.data.success == true && res.data.wishList != 0) {
+            Toast.fire({
+              icon: 'success',
+              title: ' Wisht List Product add '
+            });
+          } else {
+            Toast.fire({
+              icon: 'success',
+              title: ' Already Product add WishList '
+            });
+          }
+        });
+      } else {
+        this.$router.push("/login");
       }
     },
     priceNull: function priceNull() {
@@ -66502,16 +66540,22 @@ var render = function () {
                                 [_c("i", { staticClass: "mdi mdi-eye" })]
                               ),
                               _vm._v(" "),
-                              _vm._m(3, true),
+                              _c("a", [
+                                _c("i", {
+                                  staticClass: "mdi mdi-heart",
+                                  on: {
+                                    click: function ($event) {
+                                      $event.preventDefault()
+                                      return _vm.wishListProduct(product)
+                                    },
+                                  },
+                                }),
+                              ]),
                             ]),
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "product-dsc" }, [
-                            _c("p", [
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(_vm._s(product.name)),
-                              ]),
-                            ]),
+                            _c("p", [_c("a", [_vm._v(_vm._s(product.name))])]),
                             _vm._v(" "),
                             _c("span", [
                               _vm._v("$" + _vm._s(product.price) + " "),
@@ -66678,7 +66722,7 @@ var render = function () {
                               ? _vm.singleProduct.product.description
                               : ""
                           ) +
-                          " "
+                          "\n                                "
                       ),
                     ]),
                     _vm._v(" "),
@@ -66785,11 +66829,11 @@ var render = function () {
                       ]),
                     ]),
                     _vm._v(" "),
-                    _vm._m(4),
+                    _vm._m(3),
                   ]
                 ),
                 _vm._v(" "),
-                _vm._m(5),
+                _vm._m(4),
               ]),
             ]),
           ]),
@@ -66805,7 +66849,7 @@ var render = function () {
       },
       [
         _c("div", { staticClass: "container" }, [
-          _vm._m(6),
+          _vm._m(5),
           _vm._v(" "),
           _c("div", { staticClass: "text-center tab-content" }, [
             _c(
@@ -66854,7 +66898,7 @@ var render = function () {
                                     }),
                                   ]),
                                   _vm._v(" "),
-                                  _vm._m(7, true),
+                                  _vm._m(6, true),
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "product-dsc" }, [
@@ -66884,17 +66928,17 @@ var render = function () {
               ]
             ),
             _vm._v(" "),
-            _vm._m(8),
+            _vm._m(7),
             _vm._v(" "),
-            _vm._m(9),
+            _vm._m(8),
           ]),
         ]),
       ]
     ),
     _vm._v(" "),
-    _vm._m(10),
+    _vm._m(9),
     _vm._v(" "),
-    _vm._m(11),
+    _vm._m(10),
     _vm._v(" "),
     _c(
       "div",
@@ -66953,7 +66997,7 @@ var render = function () {
                                                 attrs: { id: "sin-1" },
                                               },
                                               [
-                                                _vm._m(12),
+                                                _vm._m(11),
                                                 _vm._v(" "),
                                                 _c(
                                                   "a",
@@ -66994,7 +67038,7 @@ var render = function () {
                                                 attrs: { id: "sin-2" },
                                               },
                                               [
-                                                _vm._m(13),
+                                                _vm._m(12),
                                                 _vm._v(" "),
                                                 _c(
                                                   "a",
@@ -67035,7 +67079,7 @@ var render = function () {
                                                 attrs: { id: "sin-3" },
                                               },
                                               [
-                                                _vm._m(14),
+                                                _vm._m(13),
                                                 _vm._v(" "),
                                                 _c(
                                                   "a",
@@ -67076,7 +67120,7 @@ var render = function () {
                                                 attrs: { id: "sin-4" },
                                               },
                                               [
-                                                _vm._m(15),
+                                                _vm._m(14),
                                                 _vm._v(" "),
                                                 _c(
                                                   "a",
@@ -67241,12 +67285,12 @@ var render = function () {
                                   ),
                                 ]),
                                 _vm._v(" "),
-                                _vm._m(16),
+                                _vm._m(15),
                                 _vm._v(" "),
                                 _vm.justPrice
                                   ? _c("h5", [
                                       _vm._v(
-                                        " " +
+                                        "\n                                                        " +
                                           _vm._s(
                                             _vm.quickViews.product
                                               ? _vm.quickViews.product.price
@@ -67355,7 +67399,7 @@ var render = function () {
                                                     [_vm._v("size")]
                                                   ),
                                                   _vm._v(" "),
-                                                  _vm._m(17),
+                                                  _vm._m(16),
                                                   _vm._v(" "),
                                                   _c(
                                                     "ul",
@@ -67472,7 +67516,6 @@ var render = function () {
                                           _c(
                                             "a",
                                             {
-                                              attrs: { href: "#" },
                                               on: {
                                                 click: function ($event) {
                                                   $event.preventDefault()
@@ -67484,25 +67527,48 @@ var render = function () {
                                             },
                                             [
                                               _vm._v(
-                                                "add to\n                                                                        cart"
+                                                "add\n                                                                        to\n                                                                        cart"
                                               ),
                                             ]
                                           ),
                                           _vm._v(" "),
-                                          _c("a", { attrs: { href: "#" } }, [
-                                            _vm._v("wishlist"),
-                                          ]),
+                                          _vm.quickViews.attribute != 0
+                                            ? _c(
+                                                "a",
+                                                {
+                                                  on: {
+                                                    click: function ($event) {
+                                                      return _vm.wishListProduct(
+                                                        _vm.quickViews.product,
+                                                        _vm.quickViews.attribute
+                                                      )
+                                                    },
+                                                  },
+                                                },
+                                                [_vm._v("wishlist")]
+                                              )
+                                            : _c(
+                                                "a",
+                                                {
+                                                  on: {
+                                                    click: function ($event) {
+                                                      return _vm.wishListProduct(
+                                                        _vm.quickViews.product
+                                                      )
+                                                    },
+                                                  },
+                                                },
+                                                [_vm._v("wishlist")]
+                                              ),
                                           _vm._v(" "),
-                                          _c("a", { attrs: { href: "#" } }, [
-                                            _vm._v("zoom"),
-                                          ]),
+                                          _c("a", [_vm._v("zoom")]),
                                         ]),
                                       ]
                                     ),
                                   ]),
                                 ]),
                                 _vm._v(" "),
-                                _vm._m(18),
+                                _vm._m(17),
                               ]),
                             ]),
                           ]
@@ -67742,14 +67808,6 @@ var staticRenderFns = [
           _c("h2", [_vm._v("Featured Products edit")]),
         ]),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("i", { staticClass: "mdi mdi-heart" }),
     ])
   },
   function () {

@@ -29,7 +29,6 @@
 
                                 </th>
                                 <th scope="col">  <span class="mr-3"> <input :disabled="disableFunctionOne()"  type="checkbox" v-model="selectAll" name="" @click="multiCategorySelect"   id=""> </span>  Name</th>
-
                                 <th scope="col">Count</th>
                                 <th scope="col">Statu</th>
                                 <th scope="col">Action</th>

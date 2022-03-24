@@ -111,11 +111,11 @@
                                                 <a @click.prevent="addToCart(product)"><i class="mdi mdi-cart"></i></a>
                                                 <a href="#" data-toggle="modal" @click="quickView(product.id)"
                                                     data-target="#quick-view"><i class="mdi mdi-eye"></i></a>
-                                                <a href="#"><i class="mdi mdi-heart"></i></a>
+                                                <a><i class="mdi mdi-heart" @click.prevent="wishListProduct(product)"></i></a>
                                             </div>
                                         </div>
                                         <div class="product-dsc">
-                                            <p><a href="#">{{product.name}}</a></p>
+                                            <p><a >{{product.name}}</a></p>
                                             <span>${{product.price}} </span>
                                         </div>
                                     </div>
@@ -136,11 +136,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4 col-md-2">
-                        <div class="tab-menu nav nav-tabs padding"  v-if="singleProduct.product">
+                        <div class="tab-menu nav nav-tabs padding" v-if="singleProduct.product">
                             <ul>
                                 <li class="active"><a href="#dress1" data-toggle="tab"
-                                        data-target="#dress1, #text1"><img :src="singleImageShow(singleProduct.product.image)"
-                                            alt="" /></a></li>
+                                        data-target="#dress1, #text1"><img
+                                            :src="singleImageShow(singleProduct.product.image)" alt="" /></a></li>
                                 <li><a href="#dress2" data-toggle="tab" data-target="#dress2,#text2"><img
                                             :src="singleImageShow(singleProduct.product.image)" alt="" /></a></li>
                             </ul>
@@ -161,8 +161,10 @@
                             <div class="tab-content">
                                 <div class="single-coming tab-pane fade in active" id="text1">
                                     <h4><a href="#">{{singleProduct.product?singleProduct.product.name:""}}</a></h4>
-                                    <span><strong>${{singleProduct.product?singleProduct.product.price:""}}</strong> </span>
-                                    <p class="come-p"> {{singleProduct.product?singleProduct.product.description:""  }} </p>
+                                    <span><strong>${{singleProduct.product?singleProduct.product.price:""}}</strong>
+                                    </span>
+                                    <p class="come-p"> {{singleProduct.product?singleProduct.product.description:""  }}
+                                    </p>
                                     <ul class="color-size">
                                         <li><span>Size</span><strong>:</strong> <a href="#"
                                                 v-for="attribute,index in singleProduct.attributeSize" :key="index">
@@ -979,7 +981,7 @@
                             <div class="d-tablecell">
                                 <div class="modal-dialog">
                                     <div class="main-view modal-content">
-                                        <div class="modal-footer" data-dismiss="modal" @click="priceNull()" >
+                                        <div class="modal-footer" data-dismiss="modal" @click="priceNull()">
                                             <span>x</span>
                                         </div>
                                         <div class="row">
@@ -988,7 +990,8 @@
                                                 <div class="quick-image">
                                                     <div class="single-quick-image text-center">
                                                         <div class="list-img">
-                                                            <div class="product-img tab-content" v-if="quickViews.product">
+                                                            <div class="product-img tab-content"
+                                                                v-if="quickViews.product">
                                                                 <div class="simpleLens-container tab-pane fade in"
                                                                     id="sin-1">
                                                                     <div class="pro-type">
@@ -997,8 +1000,8 @@
                                                                     <a class="simpleLens-image"
                                                                         :data-lens-image="imageShow(quickViews.product.image)"
                                                                         href="#"><img
-                                                                            :src="imageShow(quickViews.product.image)" alt=""
-                                                                            class="simpleLens-big-image"></a>
+                                                                            :src="imageShow(quickViews.product.image)"
+                                                                            alt="" class="simpleLens-big-image"></a>
                                                                 </div>
                                                                 <div class="simpleLens-container tab-pane active fade in"
                                                                     id="sin-2">
@@ -1008,8 +1011,8 @@
                                                                     <a class="simpleLens-image"
                                                                         :data-lens-image="imageShow(quickViews.product.image)"
                                                                         href="#"><img
-                                                                            :src="imageShow(quickViews.product.image)" alt=""
-                                                                            class="simpleLens-big-image"></a>
+                                                                            :src="imageShow(quickViews.product.image)"
+                                                                            alt="" class="simpleLens-big-image"></a>
                                                                 </div>
                                                                 <div class="simpleLens-container tab-pane fade in"
                                                                     id="sin-3">
@@ -1019,8 +1022,8 @@
                                                                     <a class="simpleLens-image"
                                                                         :data-lens-image="imageShow(quickViews.product.image)"
                                                                         href="#"><img
-                                                                            :src="imageShow(quickViews.product.image)" alt=""
-                                                                            class="simpleLens-big-image"></a>
+                                                                            :src="imageShow(quickViews.product.image)"
+                                                                            alt="" class="simpleLens-big-image"></a>
                                                                 </div>
                                                                 <div class="simpleLens-container tab-pane fade in"
                                                                     id="sin-4">
@@ -1030,8 +1033,8 @@
                                                                     <a class="simpleLens-image"
                                                                         data-lens-image="imageShow(quickViews.image)"
                                                                         href="#"><img
-                                                                            :src="imageShow(quickViews.product.image)" alt=""
-                                                                            class="simpleLens-big-image"></a>
+                                                                            :src="imageShow(quickViews.product.image)"
+                                                                            alt="" class="simpleLens-big-image"></a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1072,7 +1075,8 @@
                                                             <i class="mdi mdi-star-outline"></i>
                                                         </div>
 
-                                                        <h5 v-if="justPrice"> {{quickViews.product?quickViews.product.price:""}} </h5>
+                                                        <h5 v-if="justPrice">
+                                                            {{quickViews.product?quickViews.product.price:""}} </h5>
                                                         <h5 v-if="sPrice"> {{sizePrice.price}}</h5>
                                                         <p>{{quickViews.product?quickViews.product.description:""}} </p>
                                                         <div class="all-choose">
@@ -1127,10 +1131,13 @@
                                                                     </div>
 
                                                                     <div class="list-btn">
-                                                                        <a href="#" @click.prevent="addToCart(quickViews)">add to
+                                                                        <a
+                                                                            @click.prevent="addToCart(quickViews)">add
+                                                                            to
                                                                             cart</a>
-                                                                        <a href="#">wishlist</a>
-                                                                        <a href="#">zoom</a>
+                                                                        <a v-if="quickViews.attribute != 0" @click="wishListProduct(quickViews.product,quickViews.attribute)">wishlist</a>
+                                                                        <a v-else @click="wishListProduct(quickViews.product)">wishlist</a>
+                                                                        <a>zoom</a>
                                                                     </div>
                                                                 </form>
                                                             </div>
@@ -1184,16 +1191,16 @@
                 justPrice: true,
                 sPrice: false,
                 price: "0",
-               cart:{
-					color_id:'',
-					size_id:'',
-					quanty :"",
+                cart: {
+                    color_id: '',
+                    size_id: '',
+                    quanty: "",
 
-				},
-                whishList:{
-                    user_id:'',
-                    product_id:'',
-                    attribute:'',
+                },
+                whishList: {
+                    user_id: '',
+                    product_id: '',
+                    attribute: '',
                 }
             }
         },
@@ -1203,6 +1210,9 @@
             },
             singleProduct() {
                 return this.$store.getters.singleProduct
+            },
+             user(){
+                return this.$store.getters.loginUser
             },
 
 
@@ -1215,75 +1225,108 @@
 
         },
         methods: {
-             	addToCart(product){
-					if(this.cart.color_id && this.cart.size_id){
-							let data ={
-							attribute : this.attribute,
-							quanty : this.cart.quanty,
-						}
-						axios.post("web/addToCart",data).then((res)=>{
-                            this.$store.dispatch("cart")
-							if(res.data.product){
-                                  Toast.fire({
-                                    icon: 'success',
-                                    title: ' product Add To Cart '
-                                })
-                            }else if(res.data.quanty){
-                                  Toast.fire({
-                                    icon: 'success',
-                                    title: 'Quanty Update '
-                                    })
-                            }else if(res.data.stock){
-                                  Toast.fire({
-                                    icon: 'success',
-                                    title: ' Out of Stock '
-                                    })
-                            }
-						})
+            addToCart(product) {
+                if (this.cart.color_id && this.cart.size_id) {
+                    let data = {
+                        attribute: this.attribute,
+                        quanty: this.cart.quanty,
+                    }
+                    axios.post("web/addToCart", data).then((res) => {
+                        this.$store.dispatch("cart")
+                        if (res.data.product) {
+                            Toast.fire({
+                                icon: 'success',
+                                title: ' product Add To Cart '
+                            })
+                        } else if (res.data.quanty) {
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Quanty Update '
+                            })
+                        } else if (res.data.stock) {
+                            Toast.fire({
+                                icon: 'success',
+                                title: ' Out of Stock '
+                            })
+                        }
+                    })
 
-					}else{
-						let data ={
-							product : product,
-							quanty : this.cart.quanty,
-						}
-						axios.post("web/addToCart",data).then((res)=>{
-                            this.$store.dispatch("cart")
-							if(res.data.product){
-                                  Toast.fire({
-                                    icon: 'success',
-                                    title: ' product Add To Cart '
-                                })
-                            }else if(res.data.quanty){
-                                  Toast.fire({
-                                    icon: 'success',
-                                    title: 'Quanty Update '
-                                    })
-                            }else if(res.data.stock){
-                                  Toast.fire({
-                                    icon: 'success',
-                                    title: ' Out of Stock '
-                                    })
-                            }
-						})
-					}
+                } else {
+                    let data = {
+                        product: product,
+                        quanty: this.cart.quanty,
+                    }
+                    axios.post("web/addToCart", data).then((res) => {
+                        this.$store.dispatch("cart")
+                        if (res.data.product) {
+                            Toast.fire({
+                                icon: 'success',
+                                title: ' product Add To Cart '
+                            })
+                        } else if (res.data.quanty) {
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Quanty Update '
+                            })
+                        } else if (res.data.stock) {
+                            Toast.fire({
+                                icon: 'success',
+                                title: ' Out of Stock '
+                            })
+                        }
+                    })
+                }
 
 
 
-				},
-            priceNull(){
-                 this.justPrice = true
+            },
+            wishListProduct(product, attribute) {
+                if (this.user) {
+
+                    if (attribute) {
+                        this.whishList.user_id = this.user.id
+                        this.whishList.product_id = product.id
+                        this.whishList.attribute = attribute
+                    } else {
+                        this.whishList.user_id = this.user.id
+                        this.whishList.product_id = product.id
+                    }
+
+                    axios.post('web/whshList', this.whishList).then((res) => {
+                        if (res.data.success == true && res.data.wishList != 0) {
+                            Toast.fire({
+                                icon: 'success',
+                                title: ' Wisht List Product add '
+                            })
+                        } else {
+                            Toast.fire({
+                                icon: 'success',
+                                title: ' Already Product add WishList '
+                            })
+                        }
+
+
+                    })
+
+                } else {
+                    this.$router.push("/login")
+                }
+
+            },
+            priceNull() {
+                this.justPrice = true
                 this.sPrice = false
                 this.sizePrice = ""
-                this.whishList={
-                     user_id:'',
-                    product_id:'',
-                    attribute:'',
-                },
-				this.cart={
-					color_id:'',
-					size_id:''
+                this.whishList = {
+                        user_id: '',
+                        product_id: '',
+                        attribute: '',
+                    },
+                    this.cart = {
+                        color_id: '',
+                        size_id: ''
 
-				}
+                    }
 
             },
 
@@ -1295,9 +1338,9 @@
             },
             quickView(id) {
 
-                 axios.get("/web/quickView/"+id).then((res) => {
-                      this.quickViews = res.data
-                 })
+                axios.get("/web/quickView/" + id).then((res) => {
+                    this.quickViews = res.data
+                })
             },
             getSize(color_id, product_id) {
                 axios.get("/web/colroWiseSize/" + color_id + '/' + product_id).then((res) => {
