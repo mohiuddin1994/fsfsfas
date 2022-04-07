@@ -5660,8 +5660,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -5920,7 +5918,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_defineProperty({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       sizes: [],
@@ -5964,8 +5962,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.categoryProduct();
   },
   watch: {
-    multiCategory: function multiCategory(selected) {
-      console.log("ok");
+    $route: function $route() {
+      this.categoryProduct();
     }
   },
   methods: {
@@ -6124,11 +6122,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     }
   }
-}, "watch", {
-  $route: function $route(to, from) {
-    this.quickViewProduct;
-  }
-}));
+});
 
 /***/ }),
 

@@ -309,9 +309,9 @@ import axios from 'axios'
                 this.categoryProduct()
         },
          watch:{
-             multiCategory: function(selected){
-                 console.log("ok");
-             }
+            $route(){
+                this.categoryProduct()
+            }
 
          },
 
@@ -491,12 +491,9 @@ import axios from 'axios'
             },
 
         },
-        watch:{
-            $route(to,from){
-                this.quickViewProduct
-            },
 
-        }
+
+
     }
 </script>
 
