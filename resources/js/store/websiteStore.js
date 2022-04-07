@@ -17,6 +17,7 @@ export const storeData = {
         userOrder: {},
         userOrderCencel: {},
         categoryProduct: {},
+        subcategoryProduct: {},
 
     },
     getters: {
@@ -64,7 +65,10 @@ export const storeData = {
         },
         categoryProduct(state) {
             return state.categoryProduct
-        }
+        },
+    subcategoryProduct(state) {
+                return state.subcategoryProduct
+            },
 
 
     },
@@ -104,11 +108,7 @@ export const storeData = {
                 context.commit("category",res.data.category)
             })
         },
-        //   quickView(context,payload) {
-        //     axios.get("/web/quickView/"+payload).then((res) => {
-        //       context.commit("singleProduct",res.data)
-        //     })
-        // },
+
 
         allColor(context) {
             axios.get("/web/allColor/").then((res) => {
@@ -135,22 +135,17 @@ export const storeData = {
           },
         sideBarInfo(context) {
             axios.get("/web/sideBarInfo/").then((res) => {
-
                    context.commit("sideBarInfo",res.data)
-
               })
           },
            quickViewProduct(context,payload) {
             axios.get("/web/quickViewProduct/"+payload).then((res) => {
                 context.commit("quickViewShop",res.data)
-
-
               })
           },
           // wishlist product
         wishList(context) {
             axios.get("web/wishListAll").then((res) => {
-                console.log(res.data.wishList)
                 context.commit("wishList", res.data.wishList)
                })
         },
@@ -158,7 +153,7 @@ export const storeData = {
         cart(context) {
             axios.get("web/cart").then((res) => {
                 context.commit("cart",res.data)
-                console.log(res.data);
+
             })
         },
         // user order get userOrderCencel
@@ -177,8 +172,14 @@ export const storeData = {
          // cateogory product
         categoryProduct(context,payload) {
             axios.get("web/categoryProduct/"+payload).then((res) => {
-                console.log(res.data)
+
                 context.commit('categoryProduct',res.data.categoryProduct)
+             })
+         },
+        subcategoryProduct(context,payload) {
+            axios.get("web/subcategoryProduct/"+payload).then((res) => {
+                console.log(res.data)
+                context.commit('subcategoryProduct',res.data.subcategoryProduct)
              })
          }
 
@@ -233,6 +234,9 @@ export const storeData = {
          // category product
          categoryProduct(state, data) {
              return state.categoryProduct = data
+        },
+        subcategoryProduct(state, data) {
+             return state.subcategoryProduct = data
          }
     }
 }

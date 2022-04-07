@@ -1,24 +1,25 @@
 <?php
 
+use Whoops\Run;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\admin\sizeController;
 use App\Http\Controllers\admin\brandController;
-use App\Http\Controllers\admin\categoryController;
 use App\Http\Controllers\admin\colorController;
 use App\Http\Controllers\admin\couponController;
-use App\Http\Controllers\admin\dashboardController;
-use App\Http\Controllers\admin\productController;
-use App\Http\Controllers\admin\sizeController;
-use App\Http\Controllers\admin\subcategoryController;
 use App\Http\Controllers\website\cartController;
-use App\Http\Controllers\website\orderController;
 use App\Http\Controllers\website\userController;
-use App\Http\Controllers\website\webCategoryController;
-use App\Http\Controllers\website\webProductController;
+use App\Http\Controllers\admin\productController;
+use App\Http\Controllers\website\orderController;
+use App\Http\Controllers\admin\categoryController;
+use App\Http\Controllers\admin\dashboardController;
 use App\Http\Controllers\website\webShopController;
 use App\Http\Controllers\website\websiteController;
 use App\Http\Controllers\website\wishListController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\admin\subcategoryController;
+use App\Http\Controllers\website\webProductController;
+use App\Http\Controllers\website\webCategoryController;
 
-use Whoops\Run;
+use App\Http\Controllers\website\webSubcategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -180,6 +181,7 @@ Route::get('/web/sizeWisePrice/{attribute_id}/{size_id}/{product_id}',[webProduc
 //category
 Route::get('/web/category/',[webCategoryController::class,'index']);
 Route::get('/web/categoryProduct/{id}',[webCategoryController::class,'categoryProduct']);
+Route::get('/web/subcategoryProduct/{id}',[webSubcategoryController::class,'subcategoryProduct']);
 
 // shop page
 Route::get('/web/allColor/',[webShopController::class,'color']);

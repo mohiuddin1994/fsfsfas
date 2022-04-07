@@ -186,8 +186,8 @@
 								<div class="total">
 									<span>total <strong>=  ${{carts.price}}  </strong></span>
 								</div>
-								<router-link to="/cart" class="goto" >go to cart</router-link>
-								<a class="out-menu" href="checkout.html">Check out</a>
+								<router-link to="/cart" class="goto" >go to cart</router-link> <br>
+								<router-link to="/checkout">Check out</router-link>
 							</div>
 						</div>
 					</div>
